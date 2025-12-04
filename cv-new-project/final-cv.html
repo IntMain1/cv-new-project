@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omar Tarek - Software Engineer CV</title>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- PDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --navy-primary: #1e3a8a;  /* Deep Navy Blue */
+            --navy-dark: #0f172a;     /* Almost Black/Blue */
+            --text-grey: #374151;     /* Dark Grey for body text */
+            --light-grey: #f3f4f6;    /* Light Grey for backgrounds */
+            --border-grey: #d1d5db;   /* Border color */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #525659; /* PDF Viewer Background */
+            color: var(--text-grey);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- PAGE CONTAINER --- */
+        .page {
+            background: white;
+            width: 210mm;
+            min-height: 297mm;
+            margin: 40px auto;
+            padding: 40px 50px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            color: var(--navy-dark);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 15px;
+            color: #6b7280;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        /* Section Header Styles */
+        h2 {
+            font-size: 16px;
+            color: var(--navy-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 800;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--navy-primary); /* Navy Underline */
+            padding-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: 2px;
+        }
+
+        p, li {
+            font-size: 13px;
+            color: var(--text-grey);
+            margin-bottom: 4px;
+            text-align: justify;
+        }
+
+        a { 
+            text-decoration: none; 
+            color: var(--navy-primary); 
+            font-weight: 600;
+        }
+
+        /* --- SECTIONS --- */
+        
+        /* Header Contact */
+        .contact-bar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: var(--text-grey);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-grey);
+        }
+        .contact-bar i { color: var(--navy-primary); margin-right: 5px; } 
+        .contact-bar span, .contact-bar a { display: flex; align-items: center; color: var(--text-grey); }
+
+        /* Experience Items */
+        .job-card {
+            margin-bottom: 18px;
+            page-break-inside: avoid;
+        }
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        .date { 
+            font-weight: 700; 
+            font-size: 13px; 
+            color: var(--navy-primary); 
+        }
+        .company { 
+            font-style: italic; 
+            font-weight: 600; 
+            color: #555; 
+            font-size: 13px; 
+            margin-bottom: 6px; 
+        }
+        
+        ul { margin-left: 18px; margin-bottom: 8px; }
+        li { margin-bottom: 3px; }
+
+        /* Tags (Grey Background / Navy Text) */
+        .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+        .tag {
+            background-color: var(--light-grey);
+            color: var(--navy-primary);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Skills Grid */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            page-break-inside: avoid;
+        }
+        .skill-group {
+            margin-bottom: 12px;
+        }
+        .skill-label {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--navy-dark);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Projects */
+        .project-card { margin-bottom: 15px; page-break-inside: avoid; }
+        .project-head { display: flex; justify-content: space-between; align-items: center; }
+        .project-link { font-size: 11px; margin-left: 10px; color: var(--navy-primary); border-bottom: 1px solid #cbd5e1; }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .portfolio-item {
+            background: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-grey);
+            background-color: #fafafa;
+        }
+        .portfolio-item h4 { font-size: 13px; margin-bottom: 4px; color: var(--navy-primary); }
+        .portfolio-item p { font-size: 11px; margin: 0; color: #666; }
+
+        /* Education */
+        .edu-entry { margin-bottom: 10px; page-break-inside: avoid; }
+
+        /* --- BUTTONS --- */
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .btn-download {
+            background-color: var(--navy-primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-download:hover { background-color: var(--navy-dark); }
+
+        /* --- PRINT MEDIA QUERY --- */
+        @media print {
+            body { background: white; margin: 0; padding: 0; }
+            .page { 
+                margin: 0; 
+                padding: 20px; 
+                box-shadow: none; 
+                width: 100%;
+                max-width: 100%;
+            }
+            .controls { display: none; }
+            .tag { border: 1px solid #ccc; -webkit-print-color-adjust: exact; }
+            h2 { border-bottom: 2px solid #1e3a8a !important; }
+            
+            /* Prevent page breaks inside elements */
+            .job-card, .project-card, .skill-group, .portfolio-item {
+                page-break-inside: avoid;
+            }
+            
+            /* Ensure consistent spacing in print */
+            section { margin-bottom: 15px !important; }
+            .job-card { margin-bottom: 12px !important; }
+            h2 { margin-bottom: 10px !important; }
+            h3 { margin-bottom: 6px !important; }
+            p { margin-bottom: 6px !important; }
+            ul { margin-bottom: 8px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Download Button -->
+    <div class="controls">
+        <button class="btn-download" onclick="downloadPDF()">
+            <i class="fas fa-file-pdf"></i> Download PDF
+        </button>
+    </div>
+
+    <!-- CV Content -->
+    <div class="page" id="cv-content">
+        
+        <!-- Header -->
+        <header>
+            <h1>Omar Tarek Abdelnaby Mohamed</h1>
+            <div class="subtitle">Software Engineer | Full-Stack Developer | Integration Engineer</div>
+            
+            <div class="contact-bar">
+                <span><i class="fas fa-map-marker-alt"></i> New Cairo, Egypt</span>
+                <span><i class="fas fa-phone"></i> +20 103 352 2442</span>
+                <a href="mailto:OmarTarek1971@gmail.com"><i class="fas fa-envelope"></i> OmarTarek1971@gmail.com</a>
+                <a href="https://linkedin.com/in/omar-tarek"><i class="fab fa-linkedin"></i> linkedin.com/in/omar-tarek</a>
+                <a href="https://github.com/IntMain1"><i class="fab fa-github"></i> github.com/IntMain1</a>
+            </div>
+        </header>
+
+        <!-- Summary -->
+        <section>
+            <h2>Professional Summary</h2>
+            <p>
+                Passionate full-stack software engineer with 3+ years of experience transforming complex problems into elegant, high-performance solutions. I thrive at the intersection of technology and real-world impact, having delivered scalable web applications, ERP customizations, and network integrations that improved operational efficiency by up to 40% for clients. Adept at leading projects from concept to deployment, automating workflows, and optimizing systems to create tangible value. I bring curiosity, persistence, and a genuine excitement for building software that makes life easier and work more productive.
+            </p>
+        </section>
+
+        <!-- Experience -->
+        <section>
+            <h2>Work Experience</h2>
+
+            <div class="job-card">
+                <div class="job-header">
+                    <h3>Freelance Software Engineer</h3>
+                    <span class="date">2022 – Present</span>
+                </div>
+                <div class="company">Self-Employed</div>
+                <ul>
+                    <li>Developed full-stack web applications using <strong>React, Next.js, and Node.js</strong>, significantly improving client operational efficiency.</li>
+                    <li>Customized <strong>ERPNext</strong> workflows using Python to automate business processes for local SMEs.</li>
+                    <li>Designed and deployed RESTful APIs and integrated third-party services for seamless data synchronization.</li>
+                    <li>Managed database optimizations (MySQL, MongoDB) ensuring high availability and faster query performance.</li>
+                </ul>
+                <div class="tags">
+                    <span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Python</span><span class="tag">ERPNext</span>
+                </div>
+            </div>
+
+            <div class="job-card">
+                <div class="job-header">
+                    <h3>Integration Engineer</h3>
+                    <span class="date">Jun 2022 – Feb 2023</span>
+                </div>
+                <div class="company">Advanced Multimedia Systems (AMS)</div>
+                <ul>
+                    <li>Managed <strong>IPTV systems</strong> and Set-Top Box configurations, ensuring 99.9% uptime for multimedia services.</li>
+                    <li>Configured networking protocols including <strong>VLAN, DHCP, NAT, and SNMP</strong> for optimized traffic flow.</li>
+                    <li>Administered virtualized environments using <strong>VMware/Oracle VM</strong>, deploying CentOS servers.</li>
+                    <li>Handled Graphical User Interface (GMP) and EPG updates, enhancing user experience.</li>
+                    <li>Troubleshooted hardware/software integration issues in real-time with cross-functional teams.</li>
+                </ul>
+                <div class="tags">
+                    <span class="tag">IPTV</span><span class="tag">VLAN</span><span class="tag">VMware</span><span class="tag">Linux</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Skills -->
+        <section>
+            <h2>Technical Skills</h2>
+            <div class="skills-container">
+                <div>
+                    <div class="skill-group">
+                        <span class="skill-label">Languages</span>
+                        <div class="tags">
+                            <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">PHP</span><span class="tag">Java</span><span class="tag">C++</span><span class="tag">Dart</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <span class="skill-label">Frontend</span>
+                        <div class="tags">
+                            <span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Vue.js</span><span class="tag">Flutter</span><span class="tag">HTML/CSS</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <span class="skill-label">Backend</span>
+                        <div class="tags">
+                            <span class="tag">Node.js</span><span class="tag">REST APIs</span><span class="tag">ERPNext</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="skill-group">
+                        <span class="skill-label">Databases</span>
+                        <div class="tags">
+                            <span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Firebase</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <span class="skill-label">DevOps & Infra</span>
+                        <div class="tags">
+                            <span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">Nginx</span><span class="tag">CI/CD</span><span class="tag">Git</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <span class="skill-label">Networking</span>
+                        <div class="tags">
+                            <span class="tag">VLAN</span><span class="tag">DHCP</span><span class="tag">SNMP</span><span class="tag">VMware</span><span class="tag">IPTV</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Soft Skills -->
+        <section>
+            <h2>Soft Skills</h2>
+            <div class="skills-container" style="grid-template-columns: repeat(3, 1fr); gap:10px;">
+                <div class="skill-group" style="padding:10px; border:1px solid #eee; border-radius:6px; background:#fafafa;">
+                    <span class="skill-label" style="border:none; margin:0; color:var(--navy-primary);">Problem Solving</span>
+                    <span style="font-size:12px; color:#555">Critical Thinking, Debugging</span>
+                </div>
+                <div class="skill-group" style="padding:10px; border:1px solid #eee; border-radius:6px; background:#fafafa;">
+                    <span class="skill-label" style="border:none; margin:0; color:var(--navy-primary);">Communication</span>
+                    <span style="font-size:12px; color:#555">Collaboration, Tech Writing</span>
+                </div>
+                <div class="skill-group" style="padding:10px; border:1px solid #eee; border-radius:6px; background:#fafafa;">
+                    <span class="skill-label" style="border:none; margin:0; color:var(--navy-primary);">Professional</span>
+                    <span style="font-size:12px; color:#555">Time Mgmt, Adaptability</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section>
+            <h2>Key Projects</h2>
+            
+            <div class="project-card">
+                <div class="project-head">
+                    <h3>E-Commerce Dashboard</h3>
+                    <a href="https://github.com/IntMain1" target="_blank" class="project-link">View Code</a>
+                </div>
+                <p>Comprehensive admin dashboard for e-commerce with real-time inventory tracking, sales analytics, and user management.</p>
+                <div class="tags">
+                    <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">MongoDB</span><span class="tag">Chart.js</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-head">
+                    <h3>Real-Time Collaboration Platform</h3>
+                    <a href="https://github.com/IntMain1" target="_blank" class="project-link">View Code</a>
+                </div>
+                <p>Scalable platform allowing simultaneous document editing using WebSockets for low-latency communication.</p>
+                <div class="tags">
+                    <span class="tag">Next.js</span><span class="tag">Socket.io</span><span class="tag">Firebase</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-head">
+                    <h3>Personal Finance Tracker</h3>
+                    <a href="https://github.com/IntMain1" target="_blank" class="project-link">View Code</a>
+                </div>
+                <p>Mobile-first application to track income/expenses with budget planning. Cross-platform deployment on iOS/Android.</p>
+                <div class="tags">
+                    <span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">SQLite</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio (Compact) -->
+        <section>
+             <h2>Portfolio (Development)</h2>
+             <div class="portfolio-grid">
+                 <div class="portfolio-item">
+                     <h4>Inventory System</h4>
+                     <p>Automated stock alerts & supplier mgmt.</p>
+                 </div>
+                 <div class="portfolio-item">
+                     <h4>Attendance Tracker</h4>
+                     <p>QR-code based check-in/out system.</p>
+                 </div>
+                 <div class="portfolio-item">
+                     <h4>Restaurant System</h4>
+                     <p>Digital menu and kitchen display (KDS).</p>
+                 </div>
+             </div>
+        </section>
+
+        <!-- Education -->
+        <section>
+            <h2>Certifications & Education</h2>
+            <div class="job-header edu-entry">
+                <h3>BSc. Computer Science</h3>
+                <span class="date" style="color:var(--text-grey); font-weight:500;">2018 – 2021</span>
+            </div>
+            <div class="company" style="margin-bottom:10px;">British University in Egypt (BUE)</div>
+            
+            <p style="margin-bottom:4px"><strong>Certifications:</strong></p>
+            <ul class="cert-list" style="margin-bottom:0">
+                <li>Google Data Analyst (Google)</li>
+                <li>Meta Front-End Developer (Meta)</li>
+                <li>Full-Stack Web Development (AMIT)</li>
+                <li>Flutter Developer (ITShare)</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- Script to Generate PDF -->
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('cv-content');
+            const opt = {
+                margin:       [8, 0, 8, 0],
+                filename:     'Omar_Tarek_CV.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2,
+                    useCORS: true,
+                    scrollY: 0,
+                    scrollX: 0
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            // Hide the download button during PDF generation
+            const downloadBtn = document.querySelector('.btn-download');
+            const originalDisplay = downloadBtn.style.display;
+            downloadBtn.style.display = 'none';
+            
+            // Generate the PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore the download button
+                downloadBtn.style.display = originalDisplay;
+            });
+        }
+    </script>
+</body>
+</html>
